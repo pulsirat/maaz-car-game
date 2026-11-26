@@ -5,8 +5,68 @@
 <title>M1A4A0Z2 — Golden Beast</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080a0e;color:#f7e7b1;font-family:system-ui,Segoe UI,Arial}#game{position:fixed;inset:0}canvas{display:block}#hud{position:fixed;inset:0;pointer-events:none}.brand{position:absolute;top:18px;left:20px;text-shadow:0 2px 12px #000}.brand b{font-size:clamp(18px,3vw,30px);letter-spacing:.14em;color:#f5c84c}.brand small{display:block;letter-spacing:.28em;color:#fff;font-size:10px}.panel{position:absolute;right:18px;top:18px;background:#090b10bb;border:1px solid #c99c32;border-radius:12px;padding:12px 16px;min-width:150px;text-align:right;backdrop-filter:blur(8px)}#speed{font-size:38px;font-weight:800;line-height:1;color:#ffd45b;font-variant-numeric:tabular-nums}#gear{font-size:13px;color:#fff;margin-top:5px}.bottom{position:absolute;left:18px;bottom:18px;background:#090b10bb;border:1px solid #987329;border-radius:10px;padding:10px 13px;font-size:12px;line-height:1.6}.bottom strong{color:#ffd45b}.hint{position:absolute;left:50%;top:18px;transform:translateX(-50%);background:#090b10aa;padding:8px 13px;border-radius:20px;font-size:12px;white-space:nowrap}.touch{position:absolute;bottom:18px;right:18px;display:flex;gap:8px;pointer-events:auto}.touch button{width:54px;height:54px;border-radius:14px;border:1px solid #d3a83c;background:#111923cc;color:#ffe08a;font-size:20px;font-weight:700;touch-action:none}.touch button:active{background:#8c651d}.start{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at center,#252016bb,#050609ee);pointer-events:auto}.startbox{max-width:440px;margin:20px;padding:28px;text-align:center;border:1px solid #c99c32;border-radius:18px;background:#090b10ed;box-shadow:0 20px 80px #000}.startbox h1{margin:0;color:#f4c64f;letter-spacing:.12em}.startbox p{color:#ddd;line-height:1.5}.startbox button{background:linear-gradient(135deg,#f5d56e,#a87516);color:#17110a;border:0;border-radius:10px;padding:13px 25px;font-size:15px;font-weight:800;cursor:pointer}.muted{font-size:11px;color:#aaa}.racepanel{position:absolute;top:112px;right:18px;background:#090b10bb;border:1px solid #987329;border-radius:10px;padding:9px 12px;font-size:11px;line-height:1.55;text-align:right;min-width:150px}.racepanel strong{color:#ffd45b}.racepanel button{pointer-events:auto;background:#171b22;color:#ffe08a;border:1px solid #c99c32;border-radius:6px;padding:5px 8px;margin:3px 0 0 4px;font-weight:700}.friendpanel{position:absolute;left:18px;top:130px;width:230px;max-height:54vh;overflow:auto;pointer-events:auto;background:#090b10dd;border:1px solid #c99c32;border-radius:12px;padding:11px;font-size:11px;backdrop-filter:blur(8px)}.friendpanel b{color:#ffd45b;letter-spacing:.08em}.friendpanel input,.friendpanel select{width:100%;margin:5px 0;padding:7px;border-radius:6px;border:1px solid #78602b;background:#151a22;color:#ffe8a5}.friendpanel button{background:#171b22;color:#ffe08a;border:1px solid #c99c32;border-radius:6px;padding:7px 9px;margin:3px 2px 3px 0;font-weight:700;cursor:pointer}.friendpanel .status{color:#aee6b0;min-height:15px}.friendpanel #chatLog{height:76px;overflow:auto;background:#05070a;padding:5px;border-radius:5px;margin:5px 0;white-space:pre-wrap}.friendpanel .row{display:flex;gap:4px}.friendpanel .row input{flex:1;min-width:0}.friendpanel .row button{white-space:nowrap}
+
+/* Responsive mobile/tablet layout */
+html, body { min-height:100%; height:100%; height:100dvh; overscroll-behavior:none; }
+body { -webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent; user-select:none; }
+#game, #game canvas { width:100%; height:100%; touch-action:none; }
+button, input, select { font:inherit; }
+.touch button { min-width:54px; min-height:54px; touch-action:none; -webkit-user-select:none; user-select:none; }
+#mobileGarageToggle { display:none; }
+@media (max-width: 900px), (pointer: coarse) {
+  .hint { display:none; }
+  .brand { top:max(8px, env(safe-area-inset-top)); left:max(10px, env(safe-area-inset-left)); }
+  .brand b { font-size:clamp(16px, 4vw, 23px); }
+  .brand small { font-size:8px; letter-spacing:.18em; }
+  .panel { top:max(8px, env(safe-area-inset-top)); right:max(10px, env(safe-area-inset-right)); min-width:92px; padding:8px 10px; }
+  #speed { font-size:clamp(25px, 7vw, 34px); }
+  .racepanel { top:84px; right:8px; min-width:120px; max-width:45vw; padding:7px 8px; font-size:10px; }
+  .bottom { display:none; }
+  .touch {
+    left:max(10px, env(safe-area-inset-left));
+    right:max(10px, env(safe-area-inset-right));
+    bottom:max(10px, env(safe-area-inset-bottom));
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:clamp(5px, 2vw, 12px); pointer-events:auto;
+  }
+  .touch button {
+    width:clamp(54px, 14vw, 72px); height:clamp(54px, 14vw, 72px);
+    border-radius:18px; font-size:clamp(20px, 5vw, 27px);
+    background:rgba(12,18,27,.88); border:2px solid #d3a83c;
+    box-shadow:0 4px 14px #0009; touch-action:none;
+  }
+  .touch button:active { background:#8c651d; transform:scale(.96); }
+  .friendpanel {
+    display:none; left:8px; top:82px; width:min(280px, calc(100vw - 16px));
+    max-height:42dvh; z-index:5; font-size:12px;
+  }
+  .friendpanel.mobile-open { display:block; }
+  #mobileGarageToggle {
+    display:block; position:fixed; z-index:6; left:8px; top:54px;
+    pointer-events:auto; padding:7px 10px; border-radius:9px;
+    color:#ffe08a; background:#090b10e8; border:1px solid #c99c32;
+    font-size:11px; font-weight:800;
+  }
+  .start { padding: max(10px, env(safe-area-inset-top)) 8px max(10px, env(safe-area-inset-bottom)); overflow:auto; }
+  .startbox { width:min(100%, 440px); max-height:90dvh; overflow:auto; margin:8px; padding:clamp(16px, 5vw, 25px); }
+  .startbox h1 { font-size:clamp(22px, 7vw, 32px); }
+  .startbox p { font-size:clamp(12px, 3.5vw, 15px); }
+  .startbox button { min-height:48px; min-width:180px; }
+}
+@media (max-width: 600px) and (orientation: portrait) {
+  .touch { justify-content:center; gap:7px; }
+  .touch button { width:clamp(52px, 17vw, 68px); height:clamp(52px, 17vw, 68px); }
+  .panel { min-width:82px; }
+  .racepanel { top:82px; }
+}
+@media (max-width: 900px) and (orientation: landscape) {
+  .touch { left:12px; right:12px; bottom:8px; }
+  .touch button { width:58px; height:58px; }
+  .friendpanel { max-height:55dvh; }
+}
+
 </style></head><body>
-<div id="game"></div><div id="hud"><div class="brand"><b>M1A4A0Z2</b><small>THE GOLDEN BEAST · V12</small></div><div class="hint">P1: WASD / ARROWS · P2: IJKL · SPACE brake · 1/2/3 modes · T race · G difficulty · R reset</div><div class="panel"><div id="speed">000</div><div style="font-size:10px;letter-spacing:.2em">KM/H</div><div id="gear">GEAR 1 · V12 IDLE</div></div><div class="friendpanel"><b>FRIEND MODE · GARAGE</b><div style="margin-top:6px">Your car</div><select id="carSelect"><option value="gold">M1A4A0Z2 · GOLD V12</option><option value="red">Apex R · Crimson</option><option value="blue">Tempest GT · Azure</option><option value="white">Phantom S · Pearl</option><option value="green">Vortex X · Emerald</option><option value="purple">Nebula R · Violet</option><option value="orange">Inferno GT · Orange</option><option value="silver">Silverline · Chrome</option><option value="cyan">Eclipse · Cyan</option><option value="black">Nightfang · Black</option><option value="pink">Starlight · Pink</option><option value="lime">Volt RS · Lime</option></select><div style="margin:5px 0">Friend mode</div><select id="friendMode"><option value="off">Off</option><option value="local">Local 2-player (IJKL)</option><option value="online">Online room</option></select><div class="row"><input id="roomCode" maxlength="12" placeholder="Room code"><button id="connectFriend">Connect</button></div><div class="status" id="friendStatus">Local friend mode ready · P2 uses IJKL</div><div><b>LEADERBOARD</b><div id="leaderboard">1. YOU<br>2. FRIEND<br>3. AI RACER 1<br>4. AI RACER 2</div></div><div><b>FRIEND CHAT</b><div id="chatLog">Chat available in online rooms.</div><div class="row"><input id="chatInput" maxlength="120" placeholder="Message"><button id="sendChat">Send</button></div></div><div class="muted">P1: WASD · P2: IJKL · Online: enter same room code</div></div><div class="racepanel"><strong>HIGHWAY RACE · 2 KM</strong><br><span id="raceStatus">FREE DRIVE</span><br><span id="difficulty">DIFFICULTY: SPORT</span><br><span id="raceDetails">2.0 KM · 8 DRIVERS · 36 TRAFFIC</span><br><span id="impactCount">IMPACTS: 0</span><br><button id="raceToggle">START RACE</button><button id="difficultyBtn">CHANGE LEVEL</button></div><div class="bottom"><strong>DRIVE MODES</strong><br>1 · STRADA &nbsp; 2 · SPORT &nbsp; 3 · CORSA<br><span id="mode">STRADA · 281 km/h</span></div><div class="touch"><button data-k="left">◀</button><button data-k="up">▲</button><button data-k="down">▼</button><button data-k="right">▶</button></div></div>
+<div id="game"></div><div id="hud"><button id="mobileGarageToggle" type="button" aria-expanded="false">GARAGE / FRIENDS</button><div class="brand"><b>M1A4A0Z2</b><small>THE GOLDEN BEAST · V12</small></div><div class="hint">P1: WASD / ARROWS · P2: IJKL · SPACE brake · 1/2/3 modes · T race · G difficulty · R reset</div><div class="panel"><div id="speed">000</div><div style="font-size:10px;letter-spacing:.2em">KM/H</div><div id="gear">GEAR 1 · V12 IDLE</div></div><div class="friendpanel"><b>FRIEND MODE · GARAGE</b><div style="margin-top:6px">Your car</div><select id="carSelect"><option value="gold">M1A4A0Z2 · GOLD V12</option><option value="red">Apex R · Crimson</option><option value="blue">Tempest GT · Azure</option><option value="white">Phantom S · Pearl</option><option value="green">Vortex X · Emerald</option><option value="purple">Nebula R · Violet</option><option value="orange">Inferno GT · Orange</option><option value="silver">Silverline · Chrome</option><option value="cyan">Eclipse · Cyan</option><option value="black">Nightfang · Black</option><option value="pink">Starlight · Pink</option><option value="lime">Volt RS · Lime</option></select><div style="margin:5px 0">Friend mode</div><select id="friendMode"><option value="off">Off</option><option value="local">Local 2-player (IJKL)</option><option value="online">Online room</option></select><div class="row"><input id="roomCode" maxlength="12" placeholder="Room code"><button id="connectFriend">Connect</button></div><div class="status" id="friendStatus">Local friend mode ready · P2 uses IJKL</div><div><b>LEADERBOARD</b><div id="leaderboard">1. YOU<br>2. FRIEND<br>3. AI RACER 1<br>4. AI RACER 2</div></div><div><b>FRIEND CHAT</b><div id="chatLog">Chat available in online rooms.</div><div class="row"><input id="chatInput" maxlength="120" placeholder="Message"><button id="sendChat">Send</button></div></div><div class="muted">P1: WASD · P2: IJKL · Online: enter same room code</div></div><div class="racepanel"><strong>HIGHWAY RACE · 2 KM</strong><br><span id="raceStatus">FREE DRIVE</span><br><span id="difficulty">DIFFICULTY: SPORT</span><br><span id="raceDetails">2.0 KM · 8 DRIVERS · 36 TRAFFIC</span><br><span id="impactCount">IMPACTS: 0</span><br><button id="raceToggle">START RACE</button><button id="difficultyBtn">CHANGE LEVEL</button></div><div class="bottom"><strong>DRIVE MODES</strong><br>1 · STRADA &nbsp; 2 · SPORT &nbsp; 3 · CORSA<br><span id="mode">STRADA · 281 km/h</span></div><div class="touch"><button data-k="left">◀</button><button data-k="up">▲</button><button data-k="down">▼</button><button data-k="right">▶</button></div></div>
 <div class="start" id="start"><div class="startbox"><h1>M1A4A0Z2</h1><p>THE GOLDEN BEAST<br><b>6.5L V12 · 830 HP CONCEPT</b></p><p>Take the wheel on a night-time test circuit, then head north through the marked exit to reach the highway. Dodge traffic, watch trucks change lanes, and challenge seven AI drivers in a 2 km highway race. This is a fictional driving prototype; vehicle figures are design targets, not verified real-world performance.</p><button id="go">START ENGINE</button><p class="muted">Best on desktop with keyboard. Click once to enable synthesized engine audio.</p></div></div>
 <script type="module">
 const root=document.querySelector('#game');
@@ -16,7 +76,7 @@ try { THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/thr
 catch (cdnError) { THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x090d16);scene.fog=new THREE.Fog(0x090d16,75,260);
 const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,500);camera.position.set(0,5,-11);
-const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;root.appendChild(renderer.domElement);
+const isMobile=matchMedia('(max-width: 900px), (pointer: coarse)').matches;const renderer=new THREE.WebGLRenderer({antialias:!isMobile,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:2));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=!isMobile;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;root.appendChild(renderer.domElement);
 scene.add(new THREE.HemisphereLight(0xb8c8e8,0x21170a,2));const sun=new THREE.DirectionalLight(0xffdf9a,3);sun.position.set(-15,28,-10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
 const gold=new THREE.MeshPhysicalMaterial({color:0xd9a51e,metalness:.88,roughness:.2,clearcoat:1,clearcoatRoughness:.08});const dark=new THREE.MeshStandardMaterial({color:0x090d13,metalness:.7,roughness:.3});const glass=new THREE.MeshPhysicalMaterial({color:0x101c2c,metalness:.45,roughness:.12,transparent:true,opacity:.82});const rubber=new THREE.MeshStandardMaterial({color:0x08090b,roughness:.9});const rim=new THREE.MeshStandardMaterial({color:0x9b9da1,metalness:.9,roughness:.22});
 const floor=new THREE.Mesh(new THREE.PlaneGeometry(500,500),new THREE.MeshStandardMaterial({color:0x11151b,roughness:.95}));floor.rotation.x=-Math.PI/2;floor.position.y=-.12;floor.receiveShadow=true;scene.add(floor);
@@ -97,7 +157,7 @@ function startAudio(){try{audioCtx=new (window.AudioContext||window.webkitAudioC
 function updateAudio(){if(!audioCtx)return;const t=audioCtx.currentTime;const rpm=850+Math.abs(speed)*75;osc1.frequency.setTargetAtTime(rpm/60*2,t,.06);osc2.frequency.setTargetAtTime(rpm/60*2.02,t,.06);filter.frequency.setTargetAtTime(300+Math.abs(speed)*22+(mode-1)*350,t,.08);gain.gain.setTargetAtTime(.018+Math.abs(speed)/maxSpeeds[mode]*.055,t,.08)}
 function setMode(n){mode=n;updateCarPerformance();}
 addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(e.key.toLowerCase()))e.preventDefault();if(e.key==='1'||e.key==='2'||e.key==='3')setMode(+e.key);if(e.key.toLowerCase()==='r')reset();if(e.key.toLowerCase()==='t')toggleRace();if(e.key.toLowerCase()==='g'){difficulty=(difficulty+1)%3;setDifficulty()}});addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-document.querySelectorAll('.touch button').forEach(b=>{const k=b.dataset.k;const on=e=>{e.preventDefault();keys[k]=true},off=e=>{e.preventDefault();keys[k]=false};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off)});
+document.querySelectorAll('.touch button').forEach(b=>{const k=b.dataset.k;const on=e=>{e.preventDefault();keys[k]=true},off=e=>{e.preventDefault();keys[k]=false};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off);b.addEventListener('lostpointercapture',off);b.addEventListener('contextmenu',e=>e.preventDefault())});document.addEventListener('visibilitychange',()=>{if(document.hidden){for(const k of ['left','right','up','down'])keys[k]=false;}});
 
 // Highway traffic, AI racers, lane changes, collisions and race progression.
 const npcGold=new THREE.MeshStandardMaterial({color:0xc99a24,metalness:.75,roughness:.25});
@@ -386,7 +446,10 @@ function animate(now){
  renderer.render(scene,camera);
 }
 requestAnimationFrame(animate);
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+const garageToggle=document.querySelector('#mobileGarageToggle');
+garageToggle.addEventListener('click',()=>{const panel=document.querySelector('.friendpanel');const open=panel.classList.toggle('mobile-open');garageToggle.setAttribute('aria-expanded',String(open));garageToggle.textContent=open?'CLOSE GARAGE':'GARAGE / FRIENDS';});
+function resizeGame(){const w=document.documentElement.clientWidth||innerWidth;const h=window.visualViewport?.height||document.documentElement.clientHeight||innerHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);renderer.setPixelRatio(Math.min(devicePixelRatio,matchMedia('(max-width: 900px), (pointer: coarse)').matches?1.5:2));}
+addEventListener('resize',resizeGame);addEventListener('orientationchange',()=>setTimeout(resizeGame,150));if(window.visualViewport)window.visualViewport.addEventListener('resize',resizeGame);
 } catch (error) {
  console.error('M1A4A0Z2 startup error:',error);
  const message=(error&&error.message)?error.message:String(error);
